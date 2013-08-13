@@ -1,4 +1,4 @@
-PIcritval <- function(k,m,n,alpha, absError=0.001, interval=c(-1000, 1000)){
+PIcritval <- function(k,m,n,alpha, absError=0.001, interval=c(0, 100)){
   require(cubature)
   nu <- n - 1
   p <- 1/(n + 1)
@@ -28,7 +28,7 @@ PIcritval <- function(k,m,n,alpha, absError=0.001, interval=c(-1000, 1000)){
 
 ##########################################
 
-PIonesided <- function(k,m,n,alpha, absError=0.001, interval=c(-1000, 1000)){
+PIonesided <- function(k,m,n,alpha, absError=0.001, interval=c(0, 100)){
   require(cubature)
   nu <- n - 1
   p <- 1/(n + 1)

@@ -1,4 +1,4 @@
-predint <- function(x, k, m, level=0.95, alternative="two.sided", quantile=NULL, absError=0.001, interval=c(-1000, 1000)){
+predint <- function(x, k, m, level=0.95, alternative="two.sided", quantile=NULL, absError=0.001, interval=c(0, 100)){
   if (!is.numeric(x)) stop("x is not a numeric vector!")
   k <- as.integer(k)
   m <- as.integer(m)

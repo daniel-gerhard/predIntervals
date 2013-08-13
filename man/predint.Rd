@@ -6,7 +6,7 @@
   intervals to contain k out of m future observations given a observed sample}
 
 \usage{
-predint(x, k, m, level=0.95, alternative="two.sided", quantile=NULL, absError=0.001, interval=c(-1000, 1000))
+predint(x, k, m, level=0.95, alternative="two.sided", quantile=NULL, absError=0.001, interval=c(0, 100))
 nparpredint(x, k, m, level=0.95, alternative="two.sided")
 }
 
