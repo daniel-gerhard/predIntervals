@@ -1,67 +1,59 @@
-PIcritval <- function(k,m,n,alpha){
+PIcritval <- function(k,m,n,alpha, absError=0.001){
+  require(cubature)
   nu <- n - 1
   p <- 1/(n + 1)
-  fnu <- function(s) {
-    2 * nu * s * dchisq(nu * s^2, n-1)
+  intfunc <- function(x, j, u, nu, n, m, p){
+    t <- x[1] / (1-x[1]^2)
+    s <- x[2] / (1-x[2])
+    a <- (-u * s + (p)^(0.5) * t)/((1 - p)^(0.5))
+    b <- (u * s + (p)^(0.5) * t)/((1 - p)^(0.5))
+    w <- pnorm(b) - pnorm(a)
+    r1 <- choose(m, j) * (w)^j * (1 - w)^(m - j) * dnorm(t) 
+    fnu <- (2 * nu * s * dchisq(nu * s^2, n-1)) 
+    f1 <- (1 + x[1]^2) / ((1-x[1]^2)^2) 
+    f2 <- 1 / ((1-x[2])^2) 
+    out <- r1 * fnu * f1 * f2
+    return(out)
   }
-  g <- function(s, j, u) {
-    integrate(function(t) {
-      sapply(t, function(t) {
-        a <- (-u * s + (p)^(0.5) * t)/((1 - p)^(0.5))
-        b <- (u * s + (p)^(0.5) * t)/((1 - p)^(0.5))
-        w <- pnorm(b) - pnorm(a)
-        choose(m, j) * (w)^j * (1 - w)^(m - j) * dnorm(t)
-      })
-    }, -Inf, Inf)$value * fnu(s)
-  }
-  PB <- function(j, u) {
-    integrate(function(s) {
-      sapply(s, function(s) {
-        g(s, j, u)
-      })
-    }, 0, Inf)$value
-  }
-  h <- function(u) {
+  adaptintfunc <- function(j, u) adaptIntegrate(intfunc, lowerLimit=c(-1, 0), upperLimit=c(1, 1), j=j, u=u, nu=nu, n=n, m=m, p=p, absError=absError)$integral
+  helper <- function(u) {
     sapply(u, function(u) {
-      (sum(sapply(k:m, function(j) PB(j, u)))) - alpha
+      (sum(sapply(k:m, function(j) adaptintfunc(j, u)))) - alpha
     })
   }
-  ustar <- uniroot(h, c(0, 100))$root
-  sqrt((n+1)/n)*ustar
+  ustar <- uniroot(helper, c(-1000, 1000))$root
+  return(sqrt((n+1)/n)*ustar)  
 }
+
 
 ##########################################
 
-PIonesided <- function(k,m,n,alpha){
+PIonesided <- function(k,m,n,alpha, absError=0.001){
+  require(cubature)
   nu <- n - 1
   p <- 1/(n + 1)
-  fnu <- function(s) {
-    2 * nu * s * dchisq(nu * s^2, n-1)
+  intfunc <- function(x, j, u, nu, n, m, p){
+    t <- x[1] / (1-x[1]^2)
+    s <- x[2] / (1-x[2])
+    b <- (u * s + (p)^(0.5) * t)/((1 - p)^(0.5))
+    w <- pnorm(b)
+    r1 <- choose(m, j) * (w)^j * (1 - w)^(m - j) * dnorm(t) 
+    fnu <- (2 * nu * s * dchisq(nu * s^2, n-1)) 
+    f1 <- (1 + x[1]^2) / ((1-x[1]^2)^2) 
+    f2 <- 1 / ((1-x[2])^2) 
+    out <- r1 * fnu * f1 * f2
+    return(out)
   }
-  g <- function(s, j, u) {
-    integrate(function(t) {
-      sapply(t, function(t) {
-        b <- (u * s + (p)^(0.5) * t)/((1 - p)^(0.5))
-        w <- pnorm(b)
-        choose(m, j) * (w)^j * (1 - w)^(m - j) * dnorm(t)
-      })
-    }, -Inf, Inf)$value * fnu(s)
-  }
-  PB <- function(j, u) {
-    integrate(function(s) {
-      sapply(s, function(s) {
-        g(s, j, u)
-      })
-    }, 0, Inf)$value
-  }
-  h <- function(u) {
+  adaptintfunc <- function(j, u) adaptIntegrate(intfunc, lowerLimit=c(-1, 0), upperLimit=c(1, 1), j=j, u=u, nu=nu, n=n, m=m, p=p, absError=absError)$integral
+  helper <- function(u) {
     sapply(u, function(u) {
-      (sum(sapply(k:m, function(j) PB(j, u)))) - alpha
+      (sum(sapply(k:m, function(j) adaptintfunc(j, u)))) - alpha
     })
   }
-  ustar <- uniroot(h, c(0, 100))$root
-  sqrt((n+1)/n)*ustar
+  ustar <- uniroot(helper, c(-1000, 1000))$root
+  return(sqrt((n+1)/n)*ustar)  
 }
+
 
 ##########################################
 
