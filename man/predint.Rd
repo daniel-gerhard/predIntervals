@@ -6,7 +6,7 @@
   intervals to contain k out of m future observations given a observed sample}
 
 \usage{
-predint(x, k, m, level=0.95, alternative="two.sided", quantile=NULL, absError=0.001)
+predint(x, k, m, level=0.95, alternative="two.sided", quantile=NULL, absError=0.001, interval=c(-1000, 1000))
 nparpredint(x, k, m, level=0.95, alternative="two.sided")
 }
 
@@ -19,6 +19,7 @@ nparpredint(x, k, m, level=0.95, alternative="two.sided")
     calculate two- or one-sided intervals}
   \item{quantile}{Supply a user-defined quantile for parametric intervals}
   \item{absError}{The maximum absolute error tolerated calculating the quantile}
+  \item{interval}{Search interval for uniroot calculating the quantile}
 }
 
 

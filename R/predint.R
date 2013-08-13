@@ -1,4 +1,4 @@
-predint <- function(x, k, m, level=0.95, alternative="two.sided", quantile=NULL, absError=0.001){
+predint <- function(x, k, m, level=0.95, alternative="two.sided", quantile=NULL, absError=0.001, interval=c(-1000, 1000)){
   if (!is.numeric(x)) stop("x is not a numeric vector!")
   k <- as.integer(k)
   m <- as.integer(m)
@@ -7,7 +7,7 @@ predint <- function(x, k, m, level=0.95, alternative="two.sided", quantile=NULL,
   if (!alternative %in% c("two.sided", "less", "greater")) stop("Alternative has to be one of 'two.sided', 'less', or 'greater'")
   n <- length(x)
   if (is.null(quantile)){
-    quant <- if (alternative == "two.sided") PIcritval(k, m, n, level, absError=absError) else PIonesided(k, m, n, level, absError=absError)
+    quant <- if (alternative == "two.sided") PIcritval(k, m, n, level, absError=absError, interval=interval) else PIonesided(k, m, n, level, absError=absError, interval=interval)
   } else quant <- quantile
   est <- mean(x)
   std <- sd(x)

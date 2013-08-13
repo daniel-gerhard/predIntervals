@@ -1,4 +1,4 @@
-PIcritval <- function(k,m,n,alpha, absError=0.001){
+PIcritval <- function(k,m,n,alpha, absError=0.001, interval=c(-1000, 1000)){
   require(cubature)
   nu <- n - 1
   p <- 1/(n + 1)
@@ -21,14 +21,14 @@ PIcritval <- function(k,m,n,alpha, absError=0.001){
       (sum(sapply(k:m, function(j) adaptintfunc(j, u)))) - alpha
     })
   }
-  ustar <- uniroot(helper, c(-1000, 1000))$root
+  ustar <- uniroot(helper, interval)$root
   return(sqrt((n+1)/n)*ustar)  
 }
 
 
 ##########################################
 
-PIonesided <- function(k,m,n,alpha, absError=0.001){
+PIonesided <- function(k,m,n,alpha, absError=0.001, interval=c(-1000, 1000)){
   require(cubature)
   nu <- n - 1
   p <- 1/(n + 1)
@@ -50,7 +50,7 @@ PIonesided <- function(k,m,n,alpha, absError=0.001){
       (sum(sapply(k:m, function(j) adaptintfunc(j, u)))) - alpha
     })
   }
-  ustar <- uniroot(helper, c(-1000, 1000))$root
+  ustar <- uniroot(helper, interval)$root
   return(sqrt((n+1)/n)*ustar)  
 }
 
