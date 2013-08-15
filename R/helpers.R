@@ -64,3 +64,59 @@ distfreetollim <- function(r, m, n, K){
   sum(cumsum(PN0i) >= K)-1
 }
 
+
+##########################################
+PIlmcritval <- function(k,m,n,alpha,df, absError=0.001, interval=c(0, 100)){
+  require(cubature)
+  nu <- df
+  p <- 1/(n + 1)
+  intfunc <- function(x, j, u, nu, n, m, p){
+    t <- x[1] / (1-x[1]^2)
+    s <- x[2] / (1-x[2])
+    a <- (-u * s + (p)^(0.5) * t)/((1 - p)^(0.5))
+    b <- (u * s + (p)^(0.5) * t)/((1 - p)^(0.5))
+    w <- pnorm(b) - pnorm(a)
+    r1 <- choose(m, j) * (w)^j * (1 - w)^(m - j) * dnorm(t) 
+    fnu <- (2 * nu * s * dchisq(nu * s^2, nu)) 
+    f1 <- (1 + x[1]^2) / ((1-x[1]^2)^2) 
+    f2 <- 1 / ((1-x[2])^2) 
+    out <- r1 * fnu * f1 * f2
+    return(out)
+  }
+  adaptintfunc <- function(j, u) adaptIntegrate(intfunc, lowerLimit=c(-1, 0), upperLimit=c(1, 1), j=j, u=u, nu=nu, n=n, m=m, p=p, absError=absError)$integral
+  helper <- function(u) {
+    sapply(u, function(u) {
+      (sum(sapply(k:m, function(j) adaptintfunc(j, u)))) - alpha
+    })
+  }
+  ustar <- uniroot(helper, interval)$root
+  return(ustar) 
+}
+
+##########################################
+PIlmonesided <- function(k,m,n,alpha,df, absError=0.001, interval=c(0, 100)){
+  require(cubature)
+  nu <- df
+  p <- 1/(n + 1)
+  intfunc <- function(x, j, u, nu, n, m, p){
+    t <- x[1] / (1-x[1]^2)
+    s <- x[2] / (1-x[2])
+    b <- (u * s + (p)^(0.5) * t)/((1 - p)^(0.5))
+    w <- pnorm(b)
+    r1 <- choose(m, j) * (w)^j * (1 - w)^(m - j) * dnorm(t) 
+    fnu <- (2 * nu * s * dchisq(nu * s^2, df)) 
+    f1 <- (1 + x[1]^2) / ((1-x[1]^2)^2) 
+    f2 <- 1 / ((1-x[2])^2) 
+    out <- r1 * fnu * f1 * f2
+    return(out)
+  }
+  adaptintfunc <- function(j, u) adaptIntegrate(intfunc, lowerLimit=c(-1, 0), upperLimit=c(1, 1), j=j, u=u, nu=nu, n=n, m=m, p=p, absError=absError)$integral
+  helper <- function(u) {
+    sapply(u, function(u) {
+      (sum(sapply(k:m, function(j) adaptintfunc(j, u)))) - alpha
+    })
+  }
+  ustar <- uniroot(helper, interval)$root
+  return(ustar)  
+}
+

@@ -16,3 +16,10 @@ setClass("PrecInterval", representation(m = "numeric"),
          contains="PInt")
 setClass("NormalPrecInterval", contains="PrecInterval")
 setClass("nparPrecInterval", contains="PrecInterval")
+
+setClass("PIlm", representation(prediction = "data.frame", 
+                                newdata = "data.frame",
+                                model = "lm",
+                                k = "numeric",
+                                level = "numeric",
+                                alternative = "character"))

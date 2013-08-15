@@ -6,6 +6,7 @@
 \alias{show,NormalPrecInterval-method}
 \alias{show,nparPredInterval-method}
 \alias{show,nparPrecInterval-method}
+\alias{show,PIlm-method}
 \title{ Methods for Function show in Package `predIntervals' }
 \description{
  Methods for function \code{show} in Package `predIntervals'

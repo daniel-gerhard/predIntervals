@@ -1,9 +1,9 @@
 \name{predint}
 \alias{predint}
 \alias{nparpredint}
-\title{Prediction intervals to contain k out of m future observations} 
+\title{Prediction intervals to contain at least k out of m future observations} 
 \description{Calculates parametric and non-parametric prediction
-  intervals to contain k out of m future observations given a observed sample}
+  intervals to contain at least k out of m future observations given a observed sample}
 
 \usage{
 predint(x, k, m, level=0.95, alternative="two.sided", quantile=NULL, absError=0.001, interval=c(0, 100))
@@ -18,8 +18,8 @@ nparpredint(x, k, m, level=0.95, alternative="two.sided")
   \item{alternative}{One of "two.sided", "less", or "greater" to
     calculate two- or one-sided intervals}
   \item{quantile}{Supply a user-defined quantile for parametric intervals}
-  \item{absError}{The maximum absolute error tolerated calculating the quantile}
-  \item{interval}{Search interval for uniroot calculating the quantile}
+  \item{absError}{The maximum absolute error tolerated when calculating the quantile}
+  \item{interval}{Root finding interval when calculating the quantile}
 }
 
 

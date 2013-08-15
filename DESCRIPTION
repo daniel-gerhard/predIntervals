@@ -1,8 +1,8 @@
 Package: predIntervals
 Type: Package
 Title: predIntervals
-Version: 0.0-3
-Date: 2013-08-13
+Version: 0.0-4
+Date: 2013-08-14
 Author: Daniel Gerhard <gerhard@biostat.uni-hannover.de>
 Maintainer: Daniel Gerhard <gerhard@biostat.uni-hannover.de>
 Description: Calculation of prediction and precedence intervals for normal and non-normal data.
