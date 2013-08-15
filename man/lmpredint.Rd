@@ -33,6 +33,16 @@ lmpredint(object, newdata, k, level = 0.95, alternative="two.sided",
   32(2): 203-216.
 }
 
+\examples{
+# example from predict.lm
+x <- rnorm(15)
+y <- x + rnorm(15)
+new <- data.frame(x = seq(-3, 3, 0.5))
+
+# prediction intervals to 
+# contain at least 10 of 13 future observations
+lmpredint(lm(y ~ x), newdata=new, k=10)
+}
 
 \keyword{htest}
 

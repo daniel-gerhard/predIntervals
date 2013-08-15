@@ -2,9 +2,7 @@ lmpredint <- function(object, newdata, k, level = 0.95, alternative="two.sided",
   tt <- terms(object)
   if (!inherits(object, "lm")) warning("calling predict.lm(<fake-lm-object>) ...")
   if (missing(newdata) || is.null(newdata)) {
-    mm <- X <- model.matrix(object)
-    mmDone <- TRUE
-    offset <- object$offset
+    stop("newdata is missing!")
   } else {
     Terms <- delete.response(tt)
     m <- model.frame(Terms, newdata, na.action = na.pass, xlev = object$xlevels)
@@ -15,6 +13,7 @@ lmpredint <- function(object, newdata, k, level = 0.95, alternative="two.sided",
     if (!is.null(object$call$offset)) offset <- offset + eval(object$call$offset, newdata)
     mmDone <- FALSE
   }
+  if (k > nrow(newdata) | k < 1) stop("k needs to be between 0 < k <= nrow(newdata)")
   n <- length(object$residuals)
   p <- object$rank
   p1 <- seq_len(p)
