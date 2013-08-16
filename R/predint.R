@@ -11,7 +11,7 @@ predint <- function(x, k, m, level=0.95, alternative="two.sided", quantile=NULL,
   } else quant <- quantile
   est <- mean(x)
   std <- sd(x)
-  qterm <- quant * std * sqrt(1 + (1/n))
+  qterm <- quant * std
   lower <- if (alternative == "less") -Inf else est - qterm
   upper <- if (alternative == "greater") Inf else est + qterm
   new(Class="NormalPredInterval", quantile=quant, m=m, k=k, interval=c(lower, upper), sample=x, level=level, alternative=alternative)

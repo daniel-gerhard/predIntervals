@@ -39,6 +39,20 @@ nparpredint(x, k, m, level=0.95, alternative="two.sided")
 x <- rnorm(50)
 predint(x, k=7, m=10)
 nparpredint(x, k=7, m=10)
+
+\dontrun{
+# for k=m the prediction interval:
+predint(x, k=10, m=10, absError=0.0001)
+
+# can also be calculated by
+library(mvtnorm)
+rho <- matrix(1/(length(x)+1), nrow=10, ncol=10)
+diag(rho) <- 1
+m <- mean(x) 
+std <- sd(x)
+quant <- qmvt(0.95, df=length(x)-1, corr=rho, tail="both.tails")$quantile
+m + c(-1, 1) * quant * std * sqrt((length(x)+1)/length(x))
+}
 }
 
 \keyword{htest}

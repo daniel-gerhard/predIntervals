@@ -38,10 +38,18 @@ lmpredint(object, newdata, k, level = 0.95, alternative="two.sided",
 x <- rnorm(15)
 y <- x + rnorm(15)
 new <- data.frame(x = seq(-3, 3, 0.5))
+m <- lm(y ~ x)
 
 # prediction intervals to 
 # contain at least 10 of 13 future observations
-lmpredint(lm(y ~ x), newdata=new, k=10)
+lmpredint(m, newdata=new, k=10)
+
+# for a single prediction
+new1 <- data.frame(x = -3)
+# the prediction intervals of lmpredint
+lmpredint(m, newdata=new1, k=1, absError=0.00001)
+# agrees with
+predict(m, newdata=new1, interval="prediction")
 }
 
 \keyword{htest}
