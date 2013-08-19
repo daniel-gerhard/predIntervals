@@ -13,7 +13,7 @@ Calculation of prediction and precedence intervals for normal and non-normal dat
 Package: \tab predIntervals\cr
 Type: \tab Package\cr
 Version: \tab 0.0-1\cr
-Date: \tab 2010-18-08\cr
+Date: \tab 2013-08-19\cr
 License: \tab GPL \cr
 }
 }

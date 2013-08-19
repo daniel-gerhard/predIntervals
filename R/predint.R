@@ -7,11 +7,11 @@ predint <- function(x, k, m, level=0.95, alternative="two.sided", quantile=NULL,
   if (!alternative %in% c("two.sided", "less", "greater")) stop("Alternative has to be one of 'two.sided', 'less', or 'greater'")
   n <- length(x)
   if (is.null(quantile)){
-    quant <- if (alternative == "two.sided") PIcritval(k, m, n, level, absError=absError, interval=interval) else PIonesided(k, m, n, level, absError=absError, interval=interval)
+    quant <- if (alternative == "two.sided") PIcritval(k, m, n, level, n-1, absError=absError, interval=interval) else PIonesided(k, m, n, level, n-1, absError=absError, interval=interval)
   } else quant <- quantile
   est <- mean(x)
   std <- sd(x)
-  qterm <- quant * std
+  qterm <- quant * std * sqrt((n+1)/n)
   lower <- if (alternative == "less") -Inf else est - qterm
   upper <- if (alternative == "greater") Inf else est + qterm
   new(Class="NormalPredInterval", quantile=quant, m=m, k=k, interval=c(lower, upper), sample=x, level=level, alternative=alternative)
