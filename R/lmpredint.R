@@ -51,9 +51,9 @@ lmpredint <- function(object, newdata, k, level = 0.95, alternative="two.sided",
   
   if (is.null(quantile)){
     if (alternative == "two.sided"){
-      tfrac <- -PIlmcritval(k,m=nrow(newdata),n,level, df, absError=absError, interval=interval)
+      tfrac <- -PIcritval(k,m=nrow(newdata),n,level, df, absError=absError, interval=interval)
     } else {
-      tfrac <- -PIlmonesided(k,m=nrow(newdata),n,level, df, absError=absError, interval=interval)
+      tfrac <- -PIonesided(k,m=nrow(newdata),n,level, df, absError=absError, interval=interval)
     }
   } else {
     tfrac <- -quantile
