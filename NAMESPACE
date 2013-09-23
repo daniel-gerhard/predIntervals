@@ -2,4 +2,7 @@ export(predint, precint, nparpredint, nparprecint, lmpredint)
 exportClasses("PInt", "PredInterval", "PrecInterval", "NormalPredInterval", "NormalPrecInterval", "nparPredInterval", "nparPrecInterval", "PIlm")
 exportMethods("show")
 
+importFrom("cubature", adaptIntegrate)
+import(methods)
+import(stats)
 

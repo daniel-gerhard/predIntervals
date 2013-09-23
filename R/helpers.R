@@ -1,5 +1,4 @@
 PIcritval <- function(k,m,n,alpha,nu, absError=0.001, interval=c(0, 100)){
-  require(cubature)
   p <- 1/(n + 1)
   intfunc <- function(x, j, u, nu, n, m, p){
     t <- x[1] / (1-x[1]^2)
@@ -28,7 +27,6 @@ PIcritval <- function(k,m,n,alpha,nu, absError=0.001, interval=c(0, 100)){
 ##########################################
 
 PIonesided <- function(k,m,n,alpha,nu, absError=0.001, interval=c(0, 100)){
-  require(cubature)
   p <- 1/(n + 1)
   intfunc <- function(x, j, u, nu, n, m, p){
     t <- x[1] / (1-x[1]^2)

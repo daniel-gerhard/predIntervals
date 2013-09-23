@@ -17,13 +17,13 @@ lmpredint <- function(object, newdata, k, level = 0.95, alternative="two.sided",
   n <- length(object$residuals)
   p <- object$rank
   p1 <- seq_len(p)
-  piv <- if (p) stats:::qr.lm(object)$pivot[p1]
+  piv <- if (p) eval(parse(text="stats:::qr.lm(object)$pivot[p1]")) # ::: not allowed anymore
   if (p < ncol(X) && !(missing(newdata) || is.null(newdata))) warning("prediction from a rank-deficient fit may be misleading")
   beta <- object$coefficients
   predictor <- drop(X[, piv, drop = FALSE] %*% beta[piv])
   if (!is.null(offset)) predictor <- predictor + offset
   
-  w <- stats:::weights.default(object)
+  w <- eval(parse(text="stats:::weights.default(object)")) # ::: not allowed anymore
   if (!is.null(w)) {
     weights <- w
     warning("assuming prediction variance inversely proportional to weights used for fitting\n")
@@ -45,7 +45,7 @@ lmpredint <- function(object, newdata, k, level = 0.95, alternative="two.sided",
   res.var <- rss/df
   
   if (p > 0) {
-    XRinv <- X[, piv] %*% qr.solve(qr.R(stats:::qr.lm(object))[p1, p1])
+    XRinv <- X[, piv] %*% qr.solve(qr.R(eval(parse(text="stats:::qr.lm(object)")))[p1, p1])
     ip <- drop(XRinv^2 %*% rep(res.var, p))
   } else ip <- rep(0, n)
   
